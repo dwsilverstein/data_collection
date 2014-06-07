@@ -1,0 +1,137 @@
+from __future__ import division, print_function
+
+def lammps_units():
+    '''Function storing the different unit conventions in LAMMPS.'''
+
+    # Determine which units were used.  This is important for correct output.
+    units_table = {'REAL'       : { 'Mass'              : r'g/mol',
+                                    'Distance'          : r'\AA',
+                                    'Time'              : r'fs',
+                                    'Energy'            : r'kcal/mol',
+                                    'Velocity'          : r'\AA/fs',
+                                    'Force'             : r'kcal/(mol*\AA)',
+                                    'Torque'            : r'kcal/mol',
+                                    'Temperature'       : r'K',
+                                    'Pressure'          : r'atm',
+                                    'Dynamic Viscosity' : r'Poise',
+                                    'Charge'            : r'e',
+                                    'Dipole'            : r'e*\AA',
+                                    'Electric Field'    : r'V/\AA',
+                                    'Density'           : r'g/cm$^3$' },
+                   'METAL'      : { 'Mass'              : r'g/mol',
+                                    'Distance'          : r'\AA',
+                                    'Time'              : r'ps',
+                                    'Energy'            : r'eV',
+                                    'Velocity'          : r'\AA/ps',
+                                    'Force'             : r'eV/\AA',
+                                    'Torque'            : r'eV',
+                                    'Temperature'       : r'K',
+                                    'Pressure'          : r'bars',
+                                    'Dynamic Viscosity' : r'Poise',
+                                    'Charge'            : r'e',
+                                    'Dipole'            : r'e*\AA',
+                                    'Electric Field'    : r'V/\AA',
+                                    'Density'           : r'g/cm$^3$' },
+                   'SI'         : { 'Mass'              : r'kg',
+                                    'Distance'          : r'm',
+                                    'Time'              : r's',
+                                    'Energy'            : r'J',
+                                    'Velocity'          : r'm/s',
+                                    'Force'             : r'N',
+                                    'Torque'            : r'N*m',
+                                    'Temperature'       : r'K',
+                                    'Pressure'          : r'Pa',
+                                    'Dynamic Viscosity' : r'Pa*s',
+                                    'Charge'            : r'C',
+                                    'Dipole'            : r'C*m',
+                                    'Electric Field'    : r'V/m',
+                                    'Density'           : r'kg/cm$^3$' },
+                   'CGS'        : { 'Mass'              : r'g',
+                                    'Distance'          : r'cm',
+                                    'Time'              : r's',
+                                    'Energy'            : r'ergs',
+                                    'Velocity'          : r'cm/s',
+                                    'Force'             : r'dynes',
+                                    'Torque'            : r'dyne*cm',
+                                    'Temperature'       : r'K',
+                                    'Pressure'          : r'dyne/cm^2',
+                                    'Dynamic Viscosity' : r'Poise',
+                                    'Charge'            : r'esu',
+                                    'Dipole'            : r'esu*cm',
+                                    'Electric Field'    : r'dyne/esu',
+                                    'Density'           : r'g/cm$^3$' },
+                   'ELECTRON'   : { 'Mass'              : r'amu',
+                                    'Distance'          : r'Bohr',
+                                    'Time'              : r'fs',
+                                    'Energy'            : r'Hartrees',
+                                    'Velocity'          : r'Bohr/(atomic time unit)',
+                                    'Force'             : r'Hartree/Bohr',
+                                    'Temperature'       : r'K',
+                                    'Pressure'          : r'Pa',
+                                    'Charge'            : r'e',
+                                    'Dipole'            : r'Debye',
+                                    'Electric Field'    : r'V/cm', },
+                  }
+
+    return units_table
+
+def lammps_output_strings():
+    '''Function storing the comments/strings I use to identify different parts
+       of the LAMMPS output file with.'''
+
+    # Strings to search for
+    table = {'Define variables' : 'VARIABLES',
+             'Define units' : 'UNITS',
+             'Define LJ potential input' : 'LJPOTENTIAL',
+             'Define Potential Types' : 'POTENTIALTYPES',
+             'Define Electrostatics' : 'ELECTROSTATICS',
+             'Read Data for System' : 'READDATA',
+             'Coefficients for Bond Potentials' : 'BONDS',
+             'Coefficients for Angle Potentials' : 'ANGLES',
+             'Coefficients for LJ Potential' : 'LJCOEFF',
+             'Parameters for Building Pairwise Neighbor Lists' : 'NEIGHBORS',
+             'Define Timestep Size for MD' : 'TIMESTEP',
+             'Define the Thermodynamics Output' : 'THERMOUT',
+             'Define Operations Applied to the System' : 'FIXES',
+             'Define Extra Output' : 'DUMPS',
+             'Restart File Information' : 'RESTART',
+             'Run Dynamics' : 'RUNDYN',
+             'End of Job' : 'END'}
+
+    return table
+
+def raptor_output_strings():
+    '''Function storing the strings I use to identify different parts of the RAPTOR
+       output file.'''
+
+    table = { 'LINE'  : { #'TIMESTEP'                  : 'TIMESTEP',
+                          #'COMPLEX_COUNT'             : 'NUMCOMPLEXES',
+                          #'ENE_ENVIRONMENT'           : 'ENERGY_ENV',
+                          #'ENE_COMPLEX'               : 'ENERGY_COMPLEX',
+                          #'ENE_TOTAL'                 : 'ENERGY_TOTAL',
+                          #'START_OF_COMPLEX'          : 'COMPLEXSTART',
+                          #'state(s)'                  : 'NO_OF_EVB_STATES',
+                          #'NEXT_PIVOT_STATE'          : 'NEXT_PIVOT', 
+                        },
+              'BLOCK' : { #'REACTION_CENTER_LOCATION'  : 'RXNCENTER',
+                          #'ENVIRONMENT'               : 'ENV_ENERGY_DECOMP',
+                          'STATES'                    : 'STATES',
+                          'DIAGONAL'                  : 'ENERGY_DIAGONAL',
+                          #'OFF-DIAGONAL'              : 'ENERGY_OFF_DIAGONAL',
+                          #'EXTRA-COUPLING'            : 'EXTRA_COUPLING',
+                          #'EIGEN_VECTOR'              : 'CI_VECTOR',
+                          #'CEC_COORDINATE'            : 'CEC',
+                          #'CEC_V2_COORDINATE'         : 'CEC_V2', 
+                        },
+              'B_END' : { #'ENERGY_SUMMARY'            : 'RXNCENTER',
+                          #'LOOP_ALL_COMPLEX'          : 'ENV_ENERGY_DECOMP',
+                          'DECOMPOSED_COMPLEX_ENERGY' : 'STATES',
+                          'OFF-DIAGONAL'              : 'ENERGY_DIAGONAL',
+                          #'EXTRA-COUPLING'            : 'ENERGY_OFF_DIAGONAL',
+                          #'NEXT_PIVOT_STATE'          : 'CI_VECTOR',
+                          #'CEC_V2_COORDINATE'         : 'CEC',
+                          #'END_OF_COMPLEX'            : 'CEC_V2', 
+                        },
+            }
+
+    return table
